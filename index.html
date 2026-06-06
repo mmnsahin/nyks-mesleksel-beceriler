@@ -65,9 +65,12 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f8fafc;color:#1e293
 #lesson-title{font-size:1.5rem;font-weight:700;color:#1e3a5f;padding-bottom:14px;border-bottom:2px solid #e2e8f0;margin-bottom:20px}
 .video-section{background:#fff;border:1.5px solid #fca5a5;border-radius:10px;padding:14px 16px;margin-bottom:20px}
 .video-section-head{font-size:.8rem;font-weight:700;color:#dc2626;margin-bottom:10px}
-.video-links{display:flex;flex-wrap:wrap;gap:8px}
+.video-links{display:flex;flex-direction:column;gap:6px}
 .video-link{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#fef2f2;border:1.5px solid #fca5a5;border-radius:8px;color:#dc2626;font-size:.82rem;font-weight:600;text-decoration:none;transition:background .15s}
 .video-link:hover{background:#fee2e2}
+.vbadge{font-size:.62rem;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:2px}
+.vbadge-yt{background:#ff0000;color:#fff}
+.vbadge-drive{background:#1967d2;color:#fff}
 #lesson-body h3{font-size:.92rem;font-weight:700;color:#1e3a5f;margin:20px 0 8px;padding:7px 12px;background:#eff6ff;border-left:3px solid #2563eb;border-radius:0 5px 5px 0}
 #lesson-body p{font-size:.88rem;line-height:1.78;color:#374151;margin:6px 0;padding:8px 12px;background:#fff;border-radius:5px;border:1px solid #e2e8f0}
 #lesson-body ol{list-style:none;margin:6px 0}
@@ -253,7 +256,7 @@ function openLesson(id){
   document.getElementById("lesson-title").textContent=l.title;
   const vids=lessonVideos[id];
   document.getElementById("lesson-videos").innerHTML=vids
-    ?'<div class="video-section"><div class="video-section-head">&#127909; Video Kaynakları</div><div class="video-links">'+vids.map(v=>'<a class="video-link" href="'+v.u+'" target="_blank" rel="noopener">&#9654; '+esc(v.t)+'</a>').join("")+'</div></div>'
+    ?'<div class="video-section"><div class="video-section-head">&#127909; Video Kaynakları</div><div class="video-links">'+vids.map(v=>{const isYT=v.u.includes("youtube.com")||v.u.includes("youtu.be");const badge='<span class="vbadge vbadge-'+(isYT?"yt":"drive")+'">'+(isYT?"YT":"Drive")+'</span>';return'<a class="video-link" href="'+v.u+'" target="_blank" rel="noopener">&#9654; '+esc(v.t)+' '+badge+'</a>';}).join("")+'</div></div>'
     :"";
   document.getElementById("lesson-body").innerHTML=renderMd(l.content);
   window.scrollTo(0,0);
